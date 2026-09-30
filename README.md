@@ -1,10 +1,18 @@
 # iPad Headless Display
 
+[![skills.sh](https://skills.sh/b/fuego-wtf/ipad-headless-display)](https://skills.sh/fuego-wtf/ipad-headless-display)
+
 Use a Mac mini with an iPad as its only usable display—no permanent monitor, HDMI dummy plug, subscription, or café Wi‑Fi dependency.
 
 ![Mac mini → virtual display → iPad](assets/architecture.png)
 
 This repository packages the reusable Codex skill and a small macOS helper around [OpenDisplay](https://opendisplay.app/). OpenDisplay creates a software virtual display on the Mac, captures it, and streams it to the iPad over a direct USB data cable.
+
+Install the skill with:
+
+```bash
+npx skills add fuego-wtf/ipad-headless-display --skill ipad-headless-display
+```
 
 ## What this solves
 

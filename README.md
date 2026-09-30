@@ -50,10 +50,12 @@ Install the universal iPad receiver from the [App Store](https://apps.apple.com/
 Run the included helper:
 
 ```bash
-./scripts/setup-opendisplay.sh --install-mac --open-ipad-links
+OPENDISPLAY_DMG_URL='https://github.com/peetzweg/opendisplay/releases/download/<version>/OpenDisplay.dmg' \
+OPENDISPLAY_DMG_SHA256='<sha256-from-the-release-owner>' \
+  ./scripts/setup-opendisplay.sh --install-mac --open-ipad-links
 ```
 
-The helper downloads the latest signed OpenDisplay release, installs it in `/Applications`, and opens both iPad receiver links.
+The helper installs only an operator-approved DMG when its immutable URL and SHA-256 are supplied. It verifies the downloaded artifact and Apple signature before copying it to `/Applications`. It does not resolve or execute the mutable `latest` release automatically, and it refuses to overwrite an existing app.
 
 ### 3. Make the first connection
 
@@ -63,7 +65,7 @@ In the Mac app, select the iPad and choose **Extend**. Wait for the status `Exte
 
 ### 4. Go headless
 
-Configure automatic login and OpenDisplay launch at login if the Mac must recover without a monitor. Keep FileVault and sleep settings aligned with the user's security requirements. After Extend mode is verified, unplug only the physical monitor cable. Keep the iPad USB cable connected.
+Configure OpenDisplay launch at login if needed. Keep FileVault and pre-boot authentication enabled. Do not enable automatic login as part of this setup. After Extend mode is verified, unplug only the physical monitor cable. Keep the iPad USB cable connected.
 
 ## Mirror versus Extend
 

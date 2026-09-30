@@ -29,12 +29,12 @@ If the App Store reports that the app is unavailable in the user's country, use 
 ## Setup sequence
 
 1. Keep a physical monitor connected for initial setup and recovery.
-2. Install the signed OpenDisplay sender in `/Applications` and launch it.
+2. Install an OpenDisplay sender from an operator-approved, immutable release artifact. Verify its checksum and Apple signature before placing it in `/Applications`; do not run an unverified download.
 3. Open OpenDisplay on the iPad, connect the data cable directly, unlock the iPad, accept “Trust This Computer,” and keep the receiver in the foreground.
 4. Grant Screen Recording and Accessibility permissions on the Mac. If macOS does not show a prompt, open System Settings → Privacy & Security and add/enable OpenDisplay in Screen Recording and Accessibility.
 5. In the OpenDisplay connection menu select the iPad, then choose **Extend**. Confirm the status says `Extending to iPad` and the log contains `virtual display created` followed by `mode extend`.
 6. Test moving a window onto the iPad and confirm the iPad updates live.
-7. Configure the sender to launch at login. For unattended boot, disable FileVault pre-boot blocking and enable automatic login only when the user has explicitly chosen that security tradeoff. Prevent sleep while the display is off.
+7. Configure the sender to launch at login if needed. Keep FileVault and pre-boot authentication enabled by default. Do not enable automatic login or weaken disk protection as part of this workflow; treat any exception as a separately approved security decision. Prevent sleep while the display is off.
 8. Unplug only the physical monitor cable. Keep the iPad data cable connected. The Mac's virtual OpenDisplay monitor is now the sole usable display.
 
 ## Critical distinction

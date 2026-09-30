@@ -8,18 +8,29 @@ EOF
 }
 
 install_mac() {
-  local workdir="${TMPDIR:-/tmp}/opendisplay-install"
-  mkdir -p "$workdir"
-  curl -fsSL https://api.github.com/repos/peetzweg/opendisplay/releases/latest \
-    | awk -F'"' '/OpenDisplay\.dmg/{print $4; exit}' > "$workdir/url"
-  local url="$(<"$workdir/url")"
-  [[ -n "$url" ]] || { echo "Could not find an OpenDisplay release URL" >&2; exit 1; }
-  curl -fL "$url" -o "$workdir/OpenDisplay.dmg"
-  local mountpoint="$(hdiutil attach "$workdir/OpenDisplay.dmg" -nobrowse | awk '/\/Volumes\//{print $3; exit}')"
+  : "${OPENDISPLAY_DMG_URL:?Set OPENDISPLAY_DMG_URL to an operator-approved immutable release URL}"
+  : "${OPENDISPLAY_DMG_SHA256:?Set OPENDISPLAY_DMG_SHA256 to the expected SHA-256}"
+  local workdir="$(mktemp -d "${TMPDIR:-/tmp}/opendisplay-install.XXXXXX")"
+  local mountpoint="$workdir/mount"
+  local mounted=0
+  cleanup() {
+    if [[ "$mounted" -eq 1 ]]; then hdiutil detach "$mountpoint" >/dev/null 2>&1 || true; fi
+    rmdir "$mountpoint" >/dev/null 2>&1 || true
+    rmdir "$workdir" >/dev/null 2>&1 || true
+  }
+  trap cleanup EXIT
+  mkdir -m 700 "$mountpoint"
+  curl --fail --location --proto '=https' --tlsv1.2 "$OPENDISPLAY_DMG_URL" -o "$workdir/OpenDisplay.dmg"
+  printf '%s  %s\n' "$OPENDISPLAY_DMG_SHA256" "$workdir/OpenDisplay.dmg" | shasum -a 256 -c -
+  hdiutil attach "$workdir/OpenDisplay.dmg" -readonly -nobrowse -mountpoint "$mountpoint" >/dev/null
+  mounted=1
   [[ -d "$mountpoint/OpenDisplay.app" ]] || { echo "OpenDisplay.app not found" >&2; exit 1; }
+  codesign --verify --deep --strict --verbose=2 "$mountpoint/OpenDisplay.app"
+  spctl --assess --type execute --verbose=2 "$mountpoint/OpenDisplay.app"
+  [[ ! -e /Applications/OpenDisplay.app ]] || { echo "Refusing to overwrite /Applications/OpenDisplay.app" >&2; exit 1; }
   ditto "$mountpoint/OpenDisplay.app" /Applications/OpenDisplay.app
-  hdiutil detach "$mountpoint" >/dev/null
-  open -g -a OpenDisplay
+  echo "Installed verified OpenDisplay.app from $OPENDISPLAY_DMG_URL"
+  echo "SHA-256: $OPENDISPLAY_DMG_SHA256"
 }
 
 open_ipad_links() {

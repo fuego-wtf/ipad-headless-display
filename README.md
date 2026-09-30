@@ -1,12 +1,12 @@
-# iPad Headless Display
+# iPad/iPhone Headless Display
 
 [skills.sh listing](https://skills.sh/fuego-wtf/ipad-headless-display)
 
-Use a Mac mini with an iPad as its only usable display: no permanent monitor, HDMI dummy plug, subscription, or café Wi-Fi dependency.
+Use a Mac mini with an iPad or iPhone as its only usable display: no permanent monitor, HDMI dummy plug, subscription, or café Wi-Fi dependency.
 
-![Mac mini → virtual display → iPad](assets/architecture.png)
+![Mac mini → virtual display → iPad or iPhone](assets/architecture.png)
 
-This repository packages the reusable Codex skill and a small macOS helper around [OpenDisplay](https://opendisplay.app/). OpenDisplay creates a software virtual display on the Mac, captures it, and streams it to the iPad over a direct USB data cable.
+This repository packages the reusable Codex skill and a small macOS helper around [OpenDisplay](https://opendisplay.app/). OpenDisplay creates a software virtual display on the Mac, captures it, and streams it to the iPad or iPhone over a direct USB data cable.
 
 Install the skill with:
 
@@ -23,18 +23,18 @@ Mac mini boots and logs in
         ↓
 OpenDisplay creates a virtual display
         ↓
-iPad receiver gets the desktop over USB-C
+iPad or iPhone receiver gets the desktop over USB-C
         ↓
 physical monitor can be unplugged
 ```
 
-The USB-C cable is the transport. It does not make the iPad appear as a native USB-C monitor by itself.
+The USB-C or Lightning cable is the transport. It does not make the iPad appear as a native monitor by itself.
 
 ## Requirements
 
 - macOS 14 or newer; Apple Silicon is preferred.
-- iPadOS 15 or newer.
-- OpenDisplay sender on the Mac and receiver on the iPad.
+- iPadOS or iOS 15 or newer.
+- OpenDisplay sender on the Mac and receiver on the iPad or iPhone.
 - A direct, data-capable USB-C/Lightning cable.
 - Screen Recording permission for OpenDisplay; Accessibility permission for touch and scroll input.
 - A physical monitor for the first setup and recovery pass.
@@ -43,7 +43,7 @@ The USB-C cable is the transport. It does not make the iPad appear as a native U
 
 ### 1. Install the receivers
 
-Install the universal iPad receiver from the [App Store](https://apps.apple.com/app/id6754265378). If the App Store is unavailable in your country, use the [official TestFlight invitation](https://testflight.apple.com/join/3NYaY11c). If both are unavailable, build the iPad target from source with a free Apple ID using the [upstream instructions](https://github.com/peetzweg/opendisplay#quick-start-from-source).
+Install the universal iPad/iPhone receiver from the [App Store](https://apps.apple.com/app/id6754265378). If the App Store is unavailable in your country, use the [official TestFlight invitation](https://testflight.apple.com/join/3NYaY11c). If both are unavailable, build the iPad/iPhone target from source with a free Apple ID using the [upstream instructions](https://github.com/peetzweg/opendisplay#quick-start-from-source).
 
 ### 2. Install the Mac sender
 
@@ -59,17 +59,17 @@ The helper installs only an operator-approved DMG when its immutable URL and SHA
 
 ### 3. Make the first connection
 
-Keep the physical monitor attached. Connect the iPad directly to the Mac mini, unlock it, accept **Trust This Computer**, and open OpenDisplay on the iPad. On macOS, enable OpenDisplay under **System Settings → Privacy & Security → Screen Recording** and **Accessibility**.
+Keep the physical monitor attached. Connect the iPad or iPhone directly to the Mac mini, unlock it, accept **Trust This Computer**, and open OpenDisplay on the iPad or iPhone. On macOS, enable OpenDisplay under **System Settings → Privacy & Security → Screen Recording** and **Accessibility**.
 
-In the Mac app, select the iPad and choose **Extend**. Wait for the status `Extending to iPad`. The log should contain `virtual display created` and `mode extend`.
+In the Mac app, select the iPad or iPhone and choose **Extend**. Wait for the status `Extending to iPad`. The log should contain `virtual display created` and `mode extend`.
 
 ### 4. Go headless
 
-Configure OpenDisplay launch at login if needed. Keep FileVault and pre-boot authentication enabled. Do not enable automatic login as part of this setup. After Extend mode is verified, unplug only the physical monitor cable. Keep the iPad USB cable connected.
+Configure OpenDisplay launch at login if needed. Keep FileVault and pre-boot authentication enabled. Do not enable automatic login as part of this setup. After Extend mode is verified, unplug only the physical monitor cable. Keep the iPad or iPhone USB cable connected.
 
 ## Mirror versus Extend
 
-Use **Extend** for a headless Mac. Mirror captures the physical monitor; when that monitor is unplugged, macOS can report `Failed to find any displays or windows to capture` and the iPad freezes on the last frame. Extend creates the independent virtual monitor that remains available after the physical monitor is removed.
+Use **Extend** for a headless Mac. Mirror captures the physical monitor; when that monitor is unplugged, macOS can report `Failed to find any displays or windows to capture` and the iPad or iPhone freezes on the last frame. Extend creates the independent virtual monitor that remains available after the physical monitor is removed.
 
 ## Verify and troubleshoot
 

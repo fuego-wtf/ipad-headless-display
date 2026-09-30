@@ -1,8 +1,8 @@
 # iPad Headless Display
 
-[![skills.sh](https://skills.sh/b/fuego-wtf/ipad-headless-display)](https://skills.sh/fuego-wtf/ipad-headless-display)
+[skills.sh listing](https://skills.sh/fuego-wtf/ipad-headless-display)
 
-Use a Mac mini with an iPad as its only usable display—no permanent monitor, HDMI dummy plug, subscription, or café Wi‑Fi dependency.
+Use a Mac mini with an iPad as its only usable display: no permanent monitor, HDMI dummy plug, subscription, or café Wi-Fi dependency.
 
 ![Mac mini → virtual display → iPad](assets/architecture.png)
 

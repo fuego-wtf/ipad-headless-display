@@ -31,6 +31,7 @@ install_mac() {
   ditto "$mountpoint/OpenDisplay.app" /Applications/OpenDisplay.app
   echo "Installed verified OpenDisplay.app from $OPENDISPLAY_DMG_URL"
   echo "SHA-256: $OPENDISPLAY_DMG_SHA256"
+  open -g -a OpenDisplay
 }
 
 open_ipad_links() {

@@ -50,8 +50,8 @@ Install the universal iPad receiver from the [App Store](https://apps.apple.com/
 Run the included helper:
 
 ```bash
-OPENDISPLAY_DMG_URL='https://github.com/peetzweg/opendisplay/releases/download/<version>/OpenDisplay.dmg' \
-OPENDISPLAY_DMG_SHA256='<sha256-from-the-release-owner>' \
+OPENDISPLAY_DMG_URL='https://github.com/peetzweg/opendisplay/releases/download/v1.22.1/OpenDisplay.dmg' \
+OPENDISPLAY_DMG_SHA256='b2789d42e065a1bb32be64b27bdbca92b75bab3af440971cba71fda5d8d16841' \
   ./scripts/setup-opendisplay.sh --install-mac --open-ipad-links
 ```
 

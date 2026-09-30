@@ -15,8 +15,7 @@ install_mac() {
   local mounted=0
   cleanup() {
     if [[ "$mounted" -eq 1 ]]; then hdiutil detach "$mountpoint" >/dev/null 2>&1 || true; fi
-    rmdir "$mountpoint" >/dev/null 2>&1 || true
-    rmdir "$workdir" >/dev/null 2>&1 || true
+    rm -rf -- "$workdir"
   }
   trap cleanup EXIT
   mkdir -m 700 "$mountpoint"
